@@ -3,10 +3,10 @@ package beans;
 import javax.annotation.PostConstruct;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -42,6 +43,7 @@ public class ChartViewManager implements Serializable{
 	protected final static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private ArrayList<ArrayList<String>> databaseProjects = new ArrayList<ArrayList<String>>();
+	private DataManager dataManager;
 	
 	private double avancementMeteo = 0;
 	private String avancementImage = ""; 
@@ -51,6 +53,7 @@ public class ChartViewManager implements Serializable{
 	private String projectName;
 	private String date;
 	private String datePurge;
+	private File file;
 	
     private PieChartModel pieModel;
     private LineChartModel lineModel;
@@ -627,4 +630,29 @@ public class ChartViewManager implements Serializable{
     	}
     	
     }
+    
+	public void handleFileUpload(FileUploadEvent event) {
+        if(event.getFile() != null) {
+            file = new File(System.getProperty("java.io.tmpdir")+"lstTest.xls");
+			try {
+				file.createNewFile();
+				event.getFile().write(file.getPath());
+				dataManager = new DataManager(new FileInputStream(file.getAbsolutePath()));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            if (dataManager != null) {
+            	dataManager.saveData();
+			}
+        }
+        loadProjectList();
+    }
+    
 }
