@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<script>
+    PrimeFaces.locales['en_GB'] = {
+        firstDay : 1
+    };
+</script>
+</h:head>
+<h:body>
+
+	<h:form>
+		<p:growl id="messages" showDetail="true" sticky="false" />
+		<p:menubar  style="height:50px">
+			<p:menuitem >		
+				<input type="button" style="float:right" value="Accueil" onclick="javascript:location.href='accueil.xhtml'"/>
+			</p:menuitem>
+			<p:menuitem id ="selectOneProject" >
+				<h:form>
+					<p:outputLabel for="projectName" value="Projet : " />
+		           	<p:selectOneMenu id="projectName" value="#{chartViewManager.projectId}" style="width:500px " onchange="submit()" valueChangeListener="#{chartViewManager.valueChangeSelectProject}">
+		               	<f:selectItem itemLabel="Sélectionner un projet" itemValue="default" noSelectionOption="true" disable="true"/>
+		               	<f:selectItems value="#{chartViewManager.projects}"/>
+		          	</p:selectOneMenu>
+		        </h:form>
+	        </p:menuitem>
+			
+			<p:menuitem>
+					<p:outputLabel for="datePicker" value="Date: " />
+	        		<p:calendar id="datePicker" value="Sélectionner une date" showWeek="true" showOtherMonths="true" selectOtherMonths="true" locale="en_GB" pattern="yyyy-MM-dd">
+	        			<p:ajax event="dateSelect" listener="#{chartViewManager.valueChangeDate}" update="@all"/>
+	        		</p:calendar>
+			</p:menuitem>
+			
+		</p:menubar>
+		
+			
+	</h:form>
+	
+	
+	<p:panelGrid id="charts" style="width:100%">
+		<f:facet name="header" >
+			<p:row >
+				<p:column  >DashBoard du projet  #{chartViewManager.projectName}</p:column>
+			</p:row>
+		</f:facet>
+		<p:row>
+			<p:column>
+				<p:panel id="pieChartPnl" header="" widgetVar="panel" style="display: inline; width:30%;float:left;text-align:center">
+					<p:chart type="pie" model="#{chartViewManager.pieModel}"/>
+				</p:panel>
+				<p:draggable for="pieChartPnl" handle=".ui-panel-titlebar" />
+				<p:panel style="display: inline; width:35.5%; float:left;text-align:center;margin-top:100px;margin-left:1%; margin-right:1%">
+			    	<img src="#{chartViewManager.avancementImage}"  /> 
+			    	<h:outputText value="#{chartViewManager.avancementMeteo} % d'avancement" />
+			    </p:panel>
+				<p:panel id="barChartPnl" header="" widgetVar="panel" style="display: inline; width:30%;float:right;text-align:center">
+					<p:chart type="bar" model="#{chartViewManager.barModel}"/>
+				</p:panel>
+				<p:draggable for="barChartPnl" handle=".ui-panel-titlebar" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:panel id="lineChartPnl" header="" widgetVar="panel" style="width:100%;float:left;text-align:center">
+					<p:chart type="line" model="#{chartViewManager.lineModel}" />
+				</p:panel>
+				<p:draggable for="lineChartPnl" handle=".ui-panel-titlebar" />
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+</h:body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<script>
+    PrimeFaces.locales['en_GB'] = {
+        firstDay : 1
+    };
+</script>
+</h:head>
+<h:body>
+
+	<h:form>
+		<p:menubar style="height:50px">
+		</p:menubar>	
+	</h:form>
+		
+	<h:form>
+		<p:outputPanel >
+			<img src="logo.jpg" style="margin-bottom:100px" />
+			<div style="text-align:center">
+				<h:form>
+					<p:outputLabel for="projectName" value="Projet : " />
+				    <p:selectOneMenu id="projectName" style="margin-bottom:30px" value="0">
+				       	<f:selectItem itemLabel="Sélectionner un projet" itemValue="default" noSelectionOption="true" disable="true"/>
+				       	<f:selectItems value="#{chartViewManager.projects}"/>
+				       	<p:ajax event="change" listener="#{chartViewManager.valueChangeSelectProject}"/>
+				    </p:selectOneMenu>
+			    </h:form>
+				<h:form enctype="multipart/form-data" style="width:40%; margin-left:30%">
+			    	<p:fileUpload fileUploadListener="#{fileUpload.handleFileUpload}" style="margin-bottom:30px" auto="true" oncomplete="javascript:window.location.reload()" allowTypes="/(\.|\/)(xls|xlsx|)$/" update="@all"/>
+			    	<p:growl id="messages" showDetail="true" />
+				</h:form>
+				<h:form enctype="multipart/form-data">
+					<p:outputLabel for="purge" value="Purge : " />
+		        	<p:calendar id="purge" style="margin-bottom:30px" value="#{chartViewManager.datePurge}" showOn="button" locale="en_GB" pattern="yyyy-MM-dd">
+		        		<p:ajax event="dateSelect" listener="#{chartViewManager.valueChangeDatePurge}" update="@all"/>
+			        </p:calendar>
+				</h:form>
+			</div>
+		</p:outputPanel>
+	</h:form>
+	
+</h:body>
+</html>
