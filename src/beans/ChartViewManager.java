@@ -573,7 +573,7 @@ public class ChartViewManager implements Serializable{
 		}
     	cal.add(Calendar.DAY_OF_MONTH, -30);
     	String beginPeriod = df.format(cal.getTime());
-    	if (mysqlConnect.verifyNumberDataPeriod(projectId, beginPeriod, date) > 0) {
+    	if (mysqlConnect.verifyNumberDataPeriod(projectId, beginPeriod, formatDate(event.getObject().toString())) > 0) {
         	date = formatDate(event.getObject().toString());
         	initData();
             createModels();
@@ -630,8 +630,7 @@ public class ChartViewManager implements Serializable{
     	}
     	
     }
-    
-	public void handleFileUpload(FileUploadEvent event) {
+    public void handleFileUpload(FileUploadEvent event) {
         if(event.getFile() != null) {
             file = new File(System.getProperty("java.io.tmpdir")+"lstTest.xls");
 			try {

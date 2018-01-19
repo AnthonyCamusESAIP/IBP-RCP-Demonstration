@@ -53,7 +53,6 @@
 				<p:panel id="pieChartPnl" header="" widgetVar="panel" style="display: inline; width:30%;float:left;text-align:center">
 					<p:chart type="pie" model="#{chartViewManager.pieModel}"/>
 				</p:panel>
-				<p:draggable for="pieChartPnl" handle=".ui-panel-titlebar" />
 				<p:panel style="display: inline; width:35.5%; float:left;text-align:center;margin-top:100px;margin-left:1%; margin-right:1%">
 			    	<img src="#{chartViewManager.avancementImage}"  /> 
 			    	<h:outputText value="#{chartViewManager.avancementMeteo} % d'avancement" />
@@ -61,7 +60,6 @@
 				<p:panel id="barChartPnl" header="" widgetVar="panel" style="display: inline; width:30%;float:right;text-align:center">
 					<p:chart type="bar" model="#{chartViewManager.barModel}"/>
 				</p:panel>
-				<p:draggable for="barChartPnl" handle=".ui-panel-titlebar" />
 			</p:column>
 		</p:row>
 		<p:row>
@@ -69,7 +67,6 @@
 				<p:panel id="lineChartPnl" header="" widgetVar="panel" style="width:100%;float:left;text-align:center">
 					<p:chart type="line" model="#{chartViewManager.lineModel}" />
 				</p:panel>
-				<p:draggable for="lineChartPnl" handle=".ui-panel-titlebar" />
 			</p:column>
 		</p:row>
 	</p:panelGrid>
