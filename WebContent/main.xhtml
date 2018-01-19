@@ -24,7 +24,7 @@
 			<p:menuitem id ="selectOneProject" >
 				<h:form>
 					<p:outputLabel for="projectName" value="Projet : " />
-		           	<p:selectOneMenu id="projectName" value="#{chartViewManager.projectId}" style="width:500px " onchange="submit()" valueChangeListener="#{chartViewManager.valueChangeSelectProject}">
+		           	<p:selectOneMenu id="projectName" value="#{chartViewManager.projectId}" style="width:500px " required="false" onchange="submit()" valueChangeListener="#{chartViewManager.valueChangeSelectProject}">
 		               	<f:selectItem itemLabel="Sélectionner un projet" itemValue="default" noSelectionOption="true" disable="true"/>
 		               	<f:selectItems value="#{chartViewManager.projects}"/>
 		          	</p:selectOneMenu>
@@ -39,8 +39,6 @@
 			</p:menuitem>
 			
 		</p:menubar>
-		
-			
 	</h:form>
 	
 	

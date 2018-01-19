@@ -650,6 +650,8 @@ public class ChartViewManager implements Serializable{
 			}
             if (dataManager != null) {
             	dataManager.saveData();
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage("Successful",  "Your message: ") );
 			}
         }
         loadProjectList();
