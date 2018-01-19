@@ -427,8 +427,8 @@ public class ChartViewManager implements Serializable{
         if(testNotCompletedThisWeek.size() > 0) {
             pieModel.set("Not Completed", testNotCompletedThisWeek.size());
         }         
-        pieModel.setTitle("Résultats des tests");
         pieModel.setLegendPosition("w");
+        pieModel.setExtender("chartExtender");
     }
     private void createLineModel() {
     	
@@ -491,7 +491,6 @@ public class ChartViewManager implements Serializable{
         lineModel.addSeries(testPassed);
         lineModel.addSeries(testFailed);
         lineModel.addSeries(testNotCompleted);
-        lineModel.setTitle("Comparaison des test sur le mois passé");
         lineModel.setLegendPosition("n");
         lineModel.setShowPointLabels(true);
         lineModel.getAxes().put(AxisType.X, new CategoryAxis("Date"));
@@ -527,8 +526,7 @@ public class ChartViewManager implements Serializable{
  
         barModel.addSeries(thisWeek);
         barModel.addSeries(passedWeek);
-        
-        barModel.setTitle("Comparatif nombre de test total par rapport à la semaine dernière");
+       
         barModel.setLegendPosition("n");
          
         Axis xAxis = barModel.getAxis(AxisType.X);
@@ -537,7 +535,7 @@ public class ChartViewManager implements Serializable{
         Axis yAxis = barModel.getAxis(AxisType.Y);
         yAxis.setLabel("Tests");
         yAxis.setMin(0);
-        int[] tab = {nbTestThisWeek, nbTestWeek1};
+        int[] tab = {testFailedThisWeek.size()+testPassedThisWeek.size(), testFailedWeek1.size()+testPassedWeek1.size()};
         int max = Arrays.stream(tab).max().getAsInt();
         yAxis.setMax(max+5);
     }
@@ -621,13 +619,6 @@ public class ChartViewManager implements Serializable{
     	double nbrTest = Integer.parseInt(nbrTests.get(0).get(0));
     	  
     	avancementMeteo = Math.round(((testPassed+(testFailed*(0.5)))/nbrTest)*100); 
-    	if(avancementMeteo >= 85){
-    		avancementImage = "sun.png";
-    	} else if (avancementMeteo >= 70){
-    		avancementImage = "sun-cloud.png";
-    	} else {
-    		avancementImage = "cloud-storm.png";
-    	}
     	
     }
     public void handleFileUpload(FileUploadEvent event) {
